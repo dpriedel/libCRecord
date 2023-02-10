@@ -1,0 +1,9 @@
+
+# object files
+
+Debug_lib*
+Release_lib*
+
+# the library file 
+
+libCRecord.a
