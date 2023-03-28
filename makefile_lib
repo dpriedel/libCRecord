@@ -47,8 +47,10 @@ CFG_INC := -I${HOME}/projects/ModernCRecord/CRecord/src \
 # SRCS1 := $(SDIR1)/Unit_Test.cpp
 
 SDIR2 := ../CRecord/src
-SRCS2 := $(SDIR2)/CRecord.cpp \
-	$(SDIR2)/CField.cpp \
+SRCS2 := $(SDIR2)/CFixedField.cpp \
+	$(SDIR2)/CVariableField.cpp \
+	$(SDIR2)/CVirtualField.cpp \
+	$(SDIR2)/CArrayField.cpp \
 	$(SDIR2)/CRecordDescParser.cpp \
 	$(SDIR2)/CRecordDescVisitor.cpp \
 	$(SDIR2)/CFixedRecord.cpp \
