@@ -35,7 +35,7 @@ endif
 OUTFILE := libCRecord.a
 
 CFG_INC := -I${HOME}/projects/ModernCRecord/CRecord/src \
-	-I${HOME}/projects/ModernCRecord/common_utilities/include \
+	-I${HOME}/projects/ModernCRecord/ARD_common_utilities/include \
 	-I${HOME}/projects/ModernCRecord/CPP_Antlr_Record_Desc \
 	-I$(GTESTDIR) \
 	-I$(BOOSTDIR) \
@@ -63,7 +63,7 @@ SRCS3 := $(SDIR3)/CPP_Record_DescLexer.cpp \
 		 $(SDIR3)/CPP_Record_DescBaseVisitor.cpp
 # 		 $(SDIR3)/decContext.c
 
-SDIR3a := ../common_utilities/src
+SDIR3a := ../ARD_common_utilities/src
 SRCS3a := $(SDIR3a)/utilities.cpp
 
 SRCS := $(SRCS2) $(SRCS3) $(SRCS3a) # $(SRCS4)
