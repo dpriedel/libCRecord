@@ -19,8 +19,8 @@
 #
 MAKE=gmake
 
-BOOSTDIR := /extra/boost/boost-1.82_gcc-13
-GCCDIR := /extra/gcc/gcc-13
+BOOSTDIR := /extra/boost/boost-1.85_gcc-14
+GCCDIR := /extra/gcc/gcc-14
 GTESTDIR := /usr/local/include
 CPP := $(GCCDIR)/bin/g++
 GCC := $(GCCDIR)/bin/gcc
@@ -31,8 +31,6 @@ ifndef "CFG"
 endif
 
 #	common definitions
-
-OUTFILE := libCRecord.a
 
 CFG_INC := -I${HOME}/projects/ModernCRecord/CRecord/src \
 	-I${HOME}/projects/ModernCRecord/ARD_common_utilities/include \
@@ -71,6 +69,8 @@ VPATH := $(SDIR2):$(SDIR3):$(SDIR3a)#:$(SDIR4)
 #
 ifeq "$(CFG)" "Debug"
 
+OUTFILE := libCRecord_dbg.a
+
 OUTDIR := Debug_lib
 
 # OBJS1=$(addprefix $(OUTDIR)/, $(addsuffix .o, $(basename $(notdir $(SRCS1)))))
@@ -82,13 +82,16 @@ OBJS=$(OBJS2) $(OBJS3) $(OBJS3a) #$(OBJS4)
 
 DEPS=$(OBJS:.o=.d)
 
-COMPILE=$(CPP) -c  -x c++  -O0 -ggdb -g3 -std=c++2b -DBOOST_ENABLE_ASSERT_HANDLER -D_DEBUG -DBOOST_REGEX_STANDALONE -DSPDLOG_USE_STD_FORMAT -DUSE_OS_TZDB  -fPIC -o $@ $(CFG_INC) $< -march=native -MMD -MP
+COMPILE=$(CPP) -c  -x c++  -O0 -ggdb -g3 -std=c++23 -DBOOST_ENABLE_ASSERT_HANDLER -D_DEBUG -DBOOST_REGEX_STANDALONE -DSPDLOG_USE_STD_FORMAT -DUSE_OS_TZDB  -fPIC -o $@ $(CFG_INC) $< -march=native -mtune=native -MMD -MP
 
 LINK=ar -rs  "$(OUTFILE)" $(OBJS)
 
 endif #	DEBUG configuration
 
 ifeq "$(CFG)" "Release"
+
+OUTFILE := libCRecord.a
+
 OUTDIR := Release_lib
 
 # OBJS1=$(addprefix $(OUTDIR)/, $(addsuffix .o, $(basename $(notdir $(SRCS1)))))
@@ -100,9 +103,9 @@ OBJS=$(OBJS2) $(OBJS3) $(OBJS3a) #$(OBJS4)
 
 DEPS=$(OBJS:.o=.d)
 
-COMPILE=$(CPP) -c  -x c++  -O2  -std=c++2b -DBOOST_ENABLE_ASSERT_HANDLER -D_DEBUG -DBOOST_REGEX_STANDALONE -DSPDLOG_USE_STD_FORMAT -DUSE_OS_TZDB  -fPIC -o $@ $(CFG_INC) $< -march=native -MMD -MP
+COMPILE=$(CPP) -c  -x c++  -O2  -std=c++23 -flto -DBOOST_ENABLE_ASSERT_HANDLER -D_DEBUG -DBOOST_REGEX_STANDALONE -DSPDLOG_USE_STD_FORMAT -DUSE_OS_TZDB  -fPIC -o $@ $(CFG_INC) $< -march=native -mtune=native -MMD -MP
 
-LINK=ar -rs  "$(OUTFILE)" $(OBJS)
+LINK=ar -rs -flto=auto "$(OUTFILE)" $(OBJS)
 
 endif # Release	configuration
 
